@@ -1,0 +1,26 @@
+<head  th:fragment="head">
+    <meta charset="UTF-8">
+    <title>Medshare</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<link th:rel="stylesheet" th:href="@{/css/reset.css}"/>
+	<link th:rel="stylesheet" th:href="@{/css/styles.css}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+</head>
+<!-------------------------------------------------------------------------------------------------------------------->
+<header th:fragment="header">
+    <div class="logo">
+        <a href="/">
+            <img src="/images/logo.png" alt="logo-medshare"/>
+        </a>
+    </div>
+    <nav class="navbar">
+        <h1>Here is Nav</h1>
+    </nav>
+</header>
+<!-------------------------------------------------------------------------------------------------------------------->
+<footer th:fragment="footer">
+    <h1>Here is Footer</h1>
+</footer>
+<!-------------------------------------------------------------------------------------------------------------------->
+<script th:fragment="scripts" th:src="@{/js/app.js}"></script>
