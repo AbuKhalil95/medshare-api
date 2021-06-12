@@ -33,7 +33,7 @@ class MainController {
 
     @GetMapping("/")
     public String home(Principal p,Model m) {
-
+        System.out.println("inside home");
         m.addAttribute("userFullName", UserUtil.getFullName(p, userRepository));
         return "index.html";
     }
@@ -41,28 +41,17 @@ class MainController {
     // Gets the login page
     @GetMapping("/login")
     public String login() {
-        return "user_login.html";
-    }
-
-    // Posts the login information to the database and authorizes a new session
-    @PostMapping("/login")
-    public RedirectView login(@RequestParam(value="username") String username, @RequestParam(value="password") String password, Model m, Principal p) {
-
-        User user = userRepository.findByUsername(username);
-
-        if (user == null) {
-            return  new RedirectView("/login?error");
-        }
-        Authentication authentication = new UsernamePasswordAuthenticationToken(user, user.getPassword());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        return  new RedirectView("/");
+        System.out.println("inside login");
+        if (!UserUtil.isLoggedIn()) return "user_login.html";
+        return "redirect:/";
     }
 
     // Gets the signup page
     @GetMapping("/signup")
     public String signup() {
-        return "user_signup.html";
+        System.out.println("inside signup");
+        if (!UserUtil.isLoggedIn()) return "user_signup.html";
+        return "redirect:/";
     }
 
     // Posts the signup information and redirects to login to continue
@@ -73,7 +62,7 @@ class MainController {
                                    @RequestParam(value = "firstName") String firstName,
                                    @RequestParam(value = "middleName") String middleName,
                                    @RequestParam(value = "lastName") String lastName,
-                                   @RequestParam(value = "profilePictures") MultipartFile profilePicture) {
+                                   @RequestParam(value = "profilePicture") MultipartFile profilePicture) {
 
         String profileImage = "default.jpg";
         String fileName = uploadFileService.uploadFile(profilePicture);

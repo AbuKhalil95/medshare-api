@@ -30,7 +30,7 @@ public class User  {
     @OneToOne(cascade = CascadeType.ALL)
     private UserInfo userInfo;
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
     private Set<Items> ownedItems;
 
     public User() {

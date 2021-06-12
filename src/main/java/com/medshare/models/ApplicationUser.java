@@ -5,8 +5,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
-public class ApplicationUser implements UserDetails {
+
+public
+class ApplicationUser implements UserDetails {
+
     User user;
+    public ApplicationUser(User user) {
+        this.user = user;
+    }
+
     public User getUser() {
         return user;
     }
@@ -15,14 +22,13 @@ public class ApplicationUser implements UserDetails {
         this.user = user;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+    public Long getId() {
+        return user.getId();
     }
 
     @Override
-    public String getPassword() {
-        return user.getPassword();
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
     }
 
     @Override
@@ -31,29 +37,27 @@ public class ApplicationUser implements UserDetails {
     }
 
     @Override
+    public String getPassword() {
+        return user.getPassword();
+    }
+
+    @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
-    }
-
-    @Override
-    public String toString() {
-        return "ApplicationUser{" +
-                "user=" + user +
-                '}';
+        return true;
     }
 }
