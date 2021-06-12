@@ -15,29 +15,28 @@ import java.nio.file.StandardCopyOption;
 public
 class UploadFileService {
 
-        @Value("./src/main/resources/allImages/")
-        public String uploadDir;
+    @Value("./allImages/")
+    public String uploadDir;
 
-        public String uploadFile(MultipartFile file) {
-            try {
-                Path copyLocation = Paths
-                        .get( uploadDir + File.separator + StringUtils.cleanPath(file.getOriginalFilename()));
+    public String uploadFile(MultipartFile file) {
+        try {
+            Path copyLocation = Paths
+                    .get( uploadDir + File.separator + StringUtils.cleanPath(file.getOriginalFilename()));
 
-                if (!Files.exists(copyLocation)) {
-                    Files.createDirectories(copyLocation);
-                }
-
-                Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
-//
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("Could not store file " + file.getOriginalFilename()
-                        + ". Please try again!");
-                return null;
+            if (!Files.exists(copyLocation)) {
+                Files.createDirectories(copyLocation);
             }
 
-            return StringUtils.cleanPath(file.getOriginalFilename());
+            Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Could not store file " + file.getOriginalFilename()
+                    + ". Please try again!");
+            return null;
         }
+
+        return StringUtils.cleanPath(file.getOriginalFilename());
+    }
 
 
 }

@@ -21,7 +21,7 @@ public class LocationController {
     // TODO: Gets the location view to click and save into the item (new or update).
     @GetMapping("/location")
     public String getLocation(Model m , Principal p){
-        m.addAttribute("userFullName", UserUtil.getFullName(p, userRepository));
+        m.addAttribute("name", UserUtil.getFullName(p, userRepository));
         return "location.html";
     }
 }

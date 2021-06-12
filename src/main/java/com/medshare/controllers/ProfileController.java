@@ -31,7 +31,7 @@ public class ProfileController {
     @GetMapping("/profile")
     public String profile(Principal p, Model m) {
 
-        m.addAttribute("userFullName", UserUtil.getFullName(p, userRepository));
+        m.addAttribute("name", UserUtil.getFullName(p, userRepository));
         m.addAttribute("user", userRepository.findByUsername(p.getName()));
         return "user_profile.html";
     }

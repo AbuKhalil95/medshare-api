@@ -22,7 +22,9 @@ public class User  {
     private String middlename;
     private String lastname;
 
+    @Column(length =2048)
     private String profileImage;
+
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;

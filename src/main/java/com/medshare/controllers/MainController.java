@@ -34,7 +34,7 @@ class MainController {
     @GetMapping("/")
     public String home(Principal p,Model m) {
         System.out.println("inside home");
-        m.addAttribute("userFullName", UserUtil.getFullName(p, userRepository));
+        m.addAttribute("name", UserUtil.getFullName(p, userRepository));
         return "index.html";
     }
 

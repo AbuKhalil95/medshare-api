@@ -4,7 +4,24 @@
 <body>
 <div th:replace="fragments/common :: header"/>
 <main>
-    Here is main item_view.html
+	Here is main item_view.html
+	<tr th:each="item, iStat : ${allItems}"
+		th:style="${iStat.odd}? 'font-weight: bold;'"
+		th:alt-title="${iStat.even}? 'even' : 'odd'">
+		
+		<td th:text="${item.getId()}" />
+		<td th:text="${item.getTitle()}" />
+		<td th:text="'Is available?' + ${item.getAvailable()}" />
+		<form th:action="'/add-borrower/' + ${item.getId()}" method="POST">
+			<input type="hidden" name="item_id" th:value="${item.getId()}">
+			<input type="submit" th:value="${item.getAvailable()} ? 'Borrow': 'Return'" />
+		</form>
+		<td th:text="${item.getCreatedAt()}" />
+		<td th:each="image, isStat : ${item.getItemPictures()}">
+			<img th:src="'./allImages/' + ${image}" th:alt="${item.getTitle() + isStat.index}">
+		</td>
+		
+	</tr>
 </main>
 <div th:replace="fragments/common :: footer"/>
 </body>

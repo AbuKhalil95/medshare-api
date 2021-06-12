@@ -33,7 +33,7 @@ public class ItemProviderController<T> {
     // Gets the HTML form for adding items
     @GetMapping(value = "/add-item")
     public String displayAddItem(Model m, Principal p) {
-        m.addAttribute("userFullName", UserUtil.getFullName(p, userRepository));
+        m.addAttribute("name", UserUtil.getFullName(p, userRepository));
         return "item_add.html";
     }
 
@@ -45,17 +45,18 @@ public class ItemProviderController<T> {
                                 @RequestParam(value = "description") String description,
                                 Principal p, Model m) {
 
-        m.addAttribute("userFullName", UserUtil.getFullName(p, userRepository));
+        m.addAttribute("name", UserUtil.getFullName(p, userRepository));
 
-        List<String> images = new ArrayList();
+        String itemImage = "";
         String file = uploadFileService.uploadFile(image);
         if (file != null) {
-            images.add(file);
-        }else {
-            images.add("default-item.jpg");
+            itemImage = file;
         }
 
-        Items item = new Items(title, images, description, true, new Date(), userRepository.findByUsername(p.getName()));
+        Items item = new Items(title, itemImage, description, true, new Date(), userRepository.findByUsername(p.getName()));
+        System.out.println(userRepository.findByUsername(p.getName()));
+        System.out.println(item);
+
         itemsRepository.save(item);
         return new RedirectView("/profile");
     }

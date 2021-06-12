@@ -12,9 +12,11 @@ public class Items {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // TODO: figure out why its failing lazy loading with no session and only solution is eager
     private String title;
-    @ElementCollection
-    private List<String> itemPictures;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Column(length =2048)
+    private String itemPicture;
     @Column(length = 200000)
     private String description;
     private Boolean available;
@@ -28,9 +30,12 @@ public class Items {
     @OneToMany
     private List<Comments> comments;
 
-    public Items(String title, List<String> itemPictures, String description, Boolean available, Date createdAt, User owner) {
+    public Items() {
+    }
+
+    public Items(String title, String itemPicture, String description, Boolean available, Date createdAt, User owner) {
         this.title = title;
-        this.itemPictures = itemPictures;
+        this.itemPicture = itemPicture;
         this.description = description;
         this.available = available;
         this.createdAt = createdAt;
@@ -53,12 +58,12 @@ public class Items {
         this.title = title;
     }
 
-    public List<String> getItemPictures() {
-        return itemPictures;
+    public String getItemPicture() {
+        return itemPicture;
     }
 
-    public void setItemPictures(List<String> itemPictures) {
-        this.itemPictures = itemPictures;
+    public void setItemPicture(String itemPicture) {
+        this.itemPicture = itemPicture;
     }
 
     public List<Comments> getComments() {
@@ -101,16 +106,4 @@ public class Items {
         this.owner = owner;
     }
 
-    @Override
-    public String toString() {
-        return "Items{" +
-                "id=" + id +
-                ", itemPictures=" + itemPictures +
-                ", description='" + description + '\'' +
-                ", available=" + available +
-                ", createdAt=" + createdAt +
-                ", owner=" + owner +
-                ", comments=" + comments +
-                '}';
-    }
 }

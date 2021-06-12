@@ -11,14 +11,15 @@ import java.util.List;
 @Transactional
 public interface ItemsRepository extends JpaRepository<Items, Long> {
 
-    @Query(value = "select * from items",nativeQuery = true)
+    @Query(value = "SELECT * FROM items",nativeQuery = true)
     List<Items> findAllItems();
 
-    @Query(value = "SELECT * FROM items where owner=?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM items WHERE owner_id=?1", nativeQuery = true)
     Long findItemsByUsername(Long id);
 
     @Modifying
-    @Query(value = "update items i SET i.available = CASE i.available WHEN TRUE THEN FALSE WHEN FALSE THEN TRUE ELSE i.available END WHERE i.id=?1", nativeQuery = true)
+    @Transactional
+    @Query(value = "UPDATE items SET available = (CASE available WHEN TRUE THEN FALSE ELSE TRUE END) WHERE id=?1", nativeQuery = true)
     void toggleItemAvailability(Long id);
 
 }
