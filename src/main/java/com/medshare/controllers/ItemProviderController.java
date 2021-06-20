@@ -3,6 +3,7 @@ package com.medshare.controllers;
 import com.medshare.models.Items;
 import com.medshare.repositories.ItemsRepository;
 import com.medshare.repositories.UserRepository;
+import com.medshare.services.ImageService;
 import com.medshare.services.UploadFileService;
 import com.medshare.services.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ import java.util.List;
 
 @Controller
 public class ItemProviderController<T> {
+
+    ImageService imageService;
 
     @Autowired
     UserRepository userRepository;
@@ -47,13 +50,8 @@ public class ItemProviderController<T> {
 
         m.addAttribute("name", UserUtil.getFullName(p, userRepository));
 
-        String itemImage = "";
-        String file = uploadFileService.uploadFile(image);
-        if (file != null) {
-            itemImage = file;
-        }
-
-        Items item = new Items(title, itemImage, description, true, new Date(), userRepository.findByUsername(p.getName()));
+        ArrayList imageInfo = imageService.saveImage(image);
+        Items item = new Items(title, (String) imageInfo.get(0), (String) imageInfo.get(1), description, userRepository.findByUsername(p.getName()));
         System.out.println(userRepository.findByUsername(p.getName()));
         System.out.println(item);
 

@@ -14,10 +14,9 @@ public class Items {
 
     // TODO: figure out why its failing lazy loading with no session and only solution is eager
     private String title;
-    @ElementCollection(fetch = FetchType.EAGER)
-    @Column(length =2048)
-    private String itemPicture;
-    @Column(length = 200000)
+    private String imagePath;
+    private String imageFileName;
+    @Column(length = 2000)
     private String description;
     private Boolean available;
     @CreationTimestamp
@@ -33,12 +32,13 @@ public class Items {
     public Items() {
     }
 
-    public Items(String title, String itemPicture, String description, Boolean available, Date createdAt, User owner) {
+    public Items(String title, String imagePath, String imageFileName, String description, User owner) {
         this.title = title;
-        this.itemPicture = itemPicture;
+        this.imagePath = imagePath;
+        this.imageFileName = imageFileName;
         this.description = description;
-        this.available = available;
-        this.createdAt = createdAt;
+        this.available = true;
+        this.createdAt = new Date();
         this.owner = owner;
     }
 
@@ -58,13 +58,23 @@ public class Items {
         this.title = title;
     }
 
-    public String getItemPicture() {
-        return itemPicture;
+
+    public String getImagePath() {
+        return imagePath;
     }
 
-    public void setItemPicture(String itemPicture) {
-        this.itemPicture = itemPicture;
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
+
+    public String getImageFileName() {
+        return imageFileName;
+    }
+
+    public void setImageFileName(String imageFileName) {
+        this.imageFileName = imageFileName;
+    }
+
 
     public List<Comments> getComments() {
         return comments;
