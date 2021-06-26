@@ -4,7 +4,6 @@ import com.medshare.models.User;
 import com.medshare.models.UserInfo;
 import com.medshare.repositories.UserInfoRepository;
 import com.medshare.repositories.UserRepository;
-import com.medshare.services.UploadFileService;
 import com.medshare.services.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,8 +23,6 @@ public class ProfileController {
     UserRepository userRepository;
     @Autowired
     UserInfoRepository userInfoRepository;
-    @Autowired
-    UploadFileService uploadFileService;
 
     // Gets the profile page of the current user
     @GetMapping("/profile")
@@ -45,10 +42,10 @@ public class ProfileController {
         User user = userRepository.findByUsername(loggedInUserName);
 
         String profileImage = "default.jpg";
-        String fileName=uploadFileService.uploadFile(updateImage);
-        if (fileName!=null) {
-            profileImage = fileName;
-        }
+//        String fileName=uploadFileService.uploadFile(updateImage);
+//        if (fileName!=null) {
+//            profileImage = fileName;
+//        }
 
         user.setProfileImage(profileImage);
         userRepository.save(user);

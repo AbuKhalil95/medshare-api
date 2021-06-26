@@ -22,9 +22,9 @@ public class Items {
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
-
     @ManyToOne
     private User owner;
+    // TODO: Implement category based items, could be tags for now.
 
     @OneToMany
     private List<Comments> comments;

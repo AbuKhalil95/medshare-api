@@ -4,7 +4,6 @@ import com.medshare.models.Items;
 import com.medshare.repositories.ItemsRepository;
 import com.medshare.repositories.UserRepository;
 import com.medshare.services.ImageService;
-import com.medshare.services.UploadFileService;
 import com.medshare.services.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,21 +16,17 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @Controller
 public class ItemProviderController<T> {
 
+    @Autowired
     ImageService imageService;
-
     @Autowired
     UserRepository userRepository;
     @Autowired
     ItemsRepository itemsRepository;
 
-    @Autowired
-    UploadFileService uploadFileService;
 
     // Gets the HTML form for adding items
     @GetMapping(value = "/add-item")
@@ -49,8 +44,11 @@ public class ItemProviderController<T> {
                                 Principal p, Model m) {
 
         m.addAttribute("name", UserUtil.getFullName(p, userRepository));
-
+        System.out.println("image upload name and size: " + image.getName() + " " + image.getSize());
+        System.out.println("existing service: " + imageService);
         ArrayList imageInfo = imageService.saveImage(image);
+        System.out.println("IMAGE INFO" + imageInfo);
+
         Items item = new Items(title, (String) imageInfo.get(0), (String) imageInfo.get(1), description, userRepository.findByUsername(p.getName()));
         System.out.println(userRepository.findByUsername(p.getName()));
         System.out.println(item);

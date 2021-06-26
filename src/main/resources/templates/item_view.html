@@ -17,10 +17,10 @@
 			<input type="submit" th:value="${item.getAvailable()} ? 'Borrow': 'Return'" />
 		</form>
 		<td th:text="${item.getCreatedAt()}" />
-		<td th:each="image, isStat : ${item.getItemPictures()}">
-			<img th:src="'./allImages/' + ${image}" th:alt="${item.getTitle() + isStat.index}">
+		<td th:each="image, isStat : ${item.getImagePath()}">
+			<img th:src="${image}" th:alt="${item.getTitle() + isStat.index}">
 		</td>
-		
+		<a th:href="'/items/' + ${item.getId()}">Details</a>
 	</tr>
 </main>
 <div th:replace="fragments/common :: footer"/>

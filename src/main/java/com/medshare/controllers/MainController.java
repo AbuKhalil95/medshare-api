@@ -2,7 +2,6 @@ package com.medshare.controllers;
 
 import com.medshare.models.User;
 import com.medshare.repositories.UserRepository;
-import com.medshare.services.UploadFileService;
 import com.medshare.services.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,8 +27,6 @@ class MainController {
     UserRepository userRepository;
     @Autowired
     PasswordEncoder passwordEncoder;
-    @Autowired
-    UploadFileService uploadFileService;
 
     @GetMapping("/")
     public String home(Principal p,Model m) {
@@ -65,10 +62,10 @@ class MainController {
                                    @RequestParam(value = "profilePicture") MultipartFile profilePicture) {
 
         String profileImage = "default.jpg";
-        String fileName = uploadFileService.uploadFile(profilePicture);
-        if (fileName != null) {
-            profileImage = fileName;
-        }
+//        String fileName = uploadFileService.uploadFile(profilePicture);
+//        if (fileName != null) {
+//            profileImage = fileName;
+//        }
 
         User user = new User(
                 username,

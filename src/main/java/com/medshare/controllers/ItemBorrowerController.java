@@ -28,6 +28,7 @@ public class ItemBorrowerController {
     CommentsRepository commentsRepository;
 
     // Gets all items available to borrow
+    // TODO: Make items appear depending on certain categories
     @GetMapping("/items")
     public String displayItems(Model m, Principal p) {
         m.addAttribute("name", UserUtil.getFullName(p, userRepository));

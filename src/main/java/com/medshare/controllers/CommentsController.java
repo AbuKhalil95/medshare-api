@@ -20,6 +20,7 @@ public class CommentsController {
     @Autowired
     UserRepository userRepository;
 
+    // TODO: fix the commenting on each item
     // Adds a comment to the specified item
     @PostMapping("/add-comment")
     public RedirectView addComment(
