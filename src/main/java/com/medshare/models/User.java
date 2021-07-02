@@ -106,6 +106,10 @@ public class User  {
         this.lastname = lastname;
     }
 
+    public String getFullName() {
+        return firstname + ' ' + middlename + ' ' + lastname;
+    }
+
     public String getProfileImage() {
         return profileImage;
     }

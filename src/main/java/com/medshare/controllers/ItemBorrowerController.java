@@ -42,8 +42,8 @@ public class ItemBorrowerController {
     @GetMapping("/items/{id}")
     public String displayOneItem(@PathVariable(value = "id") Long id, Model m, Principal p) {
         m.addAttribute("name", UserUtil.getFullName(p, userRepository));
-        m.addAttribute("Item", itemsRepository.findById(id).get());
-        m.addAttribute("AllComment",commentsRepository.findComments(id));
+        m.addAttribute("item", itemsRepository.findById(id).get());
+        m.addAttribute("allComments",commentsRepository.findComments(id));
 
         return "item_view_detail.html";
     }

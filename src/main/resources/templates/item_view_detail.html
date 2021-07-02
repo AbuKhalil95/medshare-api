@@ -4,8 +4,21 @@
 <body>
 <div th:replace="fragments/common :: header"/>
 <main>
-	Here is main item_view_detail.html
-</main>
+	
+	<p th:text="${'Owner: '+ item.getOwner().getFullName()}" />
+	<br>
+	<p th:text="${item.getTitle()}" />
+	<p th:text="'Is available?' + ${item.getAvailable()}" />
+	
+	<form th:action="'/add-borrower/' + ${item.getId()}" method="POST">
+		<input type="hidden" name="item_id" th:value="${item.getId()}">
+		<input type="submit" th:value="${item.getAvailable()} ? 'Borrow': 'Return'" />
+	</form>
+	<p th:text="${item.getCreatedAt()}" />
+	<p th:each="image, isStat : ${item.getImagePath()}">
+		<img th:src="${image}" th:alt="${item.getTitle() + isStat.index}">
+	</p>
+	<a href="/items/">Back</a></main>
 <div th:replace="fragments/common :: footer"/>
 </body>
 <div th:replace="fragments/common :: scripts"/>
