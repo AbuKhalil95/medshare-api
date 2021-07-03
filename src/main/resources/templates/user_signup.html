@@ -2,6 +2,18 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
 <div th:replace="fragments/common :: head"/>
 <body>
+<style>
+	.passwordInput{
+		margin-top: 5%;
+		text-align :center;
+	}
+
+	.displayBadge{
+		margin-top: 5%;
+		display: none;
+		text-align :center;
+	}
+</style>
 <div th:replace="fragments/common :: header"/>
 <main>
 	Here is main signup.html
@@ -10,20 +22,13 @@
 		<input type="name" id="username" name="username"
 			   placeholder="Username" required>
 		
-		<label for="password">Password</label>
-		<input type="password" id="password" name="password" placeholder="Password" required>
+		<label for="PassEntry">Password</label>
+		<input type="password" id="PassEntry" name="password" class="passwordInput" placeholder="Password" required>
+		<span id="StrengthDisp">Weak</span><br>
+		
 		<label for="password_confirm">Confirm Password:</label>
 		<input type="password" id="password_confirm" name="password_confirm" placeholder="Password Confirmation" required oninput="check(this)" />
-		<script language='javascript' type='text/javascript'>
-			function check(input) {
-				if (input.value != document.getElementById('password').value) {
-					input.setCustomValidity('Password Must be Matching.');
-				} else {
-					// input is valid -- reset the error message
-					input.setCustomValidity('');
-				}
-			}
-		</script>
+
 		
 		<label for="email">E-mail</label>
 		<input type="email" id="email" name="email" aria-describedby="E-mail"
@@ -42,11 +47,14 @@
 			   placeholder="Last Name" required>
 		
 		<label for="profilePicture">Profile Picture</label>
-		<input type="file" id="profilePicture" name="profilePicture">
+		<input type="file" id="profilePicture" name="profilePicture" onchange="validateSize(this)">
 		<button type="submit">Sign Up</button>
 	</form>
 </main>
 <div th:replace="fragments/common :: footer"/>
 </body>
 <div th:replace="fragments/common :: scripts"/>
+<script src="/js/imageUpload.js"></script>
+<script src="/js/passValidation.js"></script>
+
 </html>

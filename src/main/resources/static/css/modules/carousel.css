@@ -1,0 +1,16 @@
+.carousel {
+    margin: auto;
+    max-width: 60vw;
+    max-height: 60vh;
+}
+
+.carousel img {
+    margin: auto;
+    max-height: 60vh;
+    min-width: 100%;
+}
+
+.carousel-caption {
+    background-color: #000000b0;
+}
+

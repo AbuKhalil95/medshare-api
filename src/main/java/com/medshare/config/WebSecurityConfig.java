@@ -39,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/","/signup","/login").permitAll()
-                .antMatchers("/webjars/**","/images/**","/css/**.css","/js/**.js","./allImages/**").permitAll()
+                .antMatchers("/webjars/**","/images/**","/css/**","/js/**.js","./allImages/**", "/modules/**.css").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -57,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()
-                .antMatchers("/resources/**"); // #3
+                .antMatchers("/resources/**", "/modules/**.css"); // #3
     }
 
 //    @Bean

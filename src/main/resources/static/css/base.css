@@ -1,3 +1,44 @@
+/*  base css that applies as a common theme */
+
+header nav {
+    text-align: center;
+}
+
+header nav img {
+    width: 6em;
+}
+
+header nav hr {
+    border-block-color: white;
+    width: 20%;
+}
+
 main {
     min-height: 60vh;
+    max-width: 80vw;
+    margin: auto;
+    padding: 3em;
+    text-align: center;
+}
+
+@media only screen and (max-width: 991px){
+    header nav {
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -ms-flex-align: center;
+        align-items: center;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        padding: .5rem 1rem;
+
+    }
+}
+
+@media only screen and (min-width: 992px){
+
+    header nav div {
+        width: fit-content;
+        margin: auto;
+    }
 }
