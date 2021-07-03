@@ -2,6 +2,7 @@ package com.medshare.controllers;
 
 import com.medshare.models.User;
 import com.medshare.repositories.UserRepository;
+import com.medshare.services.ImageService;
 import com.medshare.services.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,12 +18,15 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Date;
 
 @Controller
 public
 class MainController {
 
+    @Autowired
+    ImageService imageService;
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -66,6 +70,8 @@ class MainController {
 //        if (fileName != null) {
 //            profileImage = fileName;
 //        }
+        ArrayList imageInfo = imageService.saveImage(profilePicture);
+
 
         User user = new User(
                 username,
@@ -74,7 +80,8 @@ class MainController {
                 firstName,
                 middleName,
                 lastName,
-                profileImage,
+                (String) imageInfo.get(0),
+                (String) imageInfo.get(1),
                 new Date()
         );
         userRepository.save(user);

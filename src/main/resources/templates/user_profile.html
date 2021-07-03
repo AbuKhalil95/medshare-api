@@ -4,7 +4,38 @@
 <body>
 <div th:replace="fragments/common :: header"/>
 <main>
-    Here is main profile.html
+	<h1>Profile</h1>
+	<img th:src="${user.getImagePath()}" th:alt="${user.getImageFileName}">
+	
+	<form action="/profile_image?_method=PUT"  method="POST" enctype="multipart/form-data">
+		<div class="form-group">
+			<label for="profilePicture">Profile Picture</label>
+			<input type="file" class="form-control" id="profilePicture" name="profilePicture">
+		</div>
+		<button class="btn btn-primary" type="submit">
+			<i class="fa fa-fw fa-camera"></i>
+			<span>Change Photo</span>
+		</button>
+	</form>
+	<h2>Joined: <span th:text="${user.getOwnedItems()}"/></h2>
+	<h2>Full Name: <span th:text="${user.getFirstname()} + ${user.getMiddlename()} + ${user.getLastname()}"/></h2>
+	<h3>Email: <span th:text="${user.getEmail()}"/></h3>
+	
+	<h4>Owned Items:</h4>
+	<tr th:each="item, iStat : ${user.getOwnedItems()}"
+		th:style="${iStat.odd}? 'font-weight: bold;'"
+		th:alt-title="${iStat.even}? 'even' : 'odd'">
+		
+		<td th:text="${item.getTitle()}" />
+		<td th:text="'Is available?' + ${item.getAvailable()}" />
+		<p th:text="${item.getCategory()}" />
+		
+		<td th:each="image, isStat : ${item.getImagePath()}">
+			<img th:src="${image}" th:alt="${item.getTitle() + isStat.index}">
+		</td>
+		<p th:text="${item.getCreatedAt()}" />
+		<br>
+	</tr>
 </main>
 <div th:replace="fragments/common :: footer"/>
 </body>

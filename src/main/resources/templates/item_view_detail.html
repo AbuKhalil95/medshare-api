@@ -9,6 +9,7 @@
 	<br>
 	<p th:text="${item.getTitle()}" />
 	<p th:text="'Is available?' + ${item.getAvailable()}" />
+	<p th:text="${item.getCategory()}" />
 	
 	<form th:action="'/add-borrower/' + ${item.getId()}" method="POST">
 		<input type="hidden" name="item_id" th:value="${item.getId()}">

@@ -12,7 +12,6 @@ public class Items {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // TODO: figure out why its failing lazy loading with no session and only solution is eager
     private String title;
     private String imagePath;
     private String imageFileName;
@@ -22,9 +21,12 @@ public class Items {
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
+
     @ManyToOne
     private User owner;
-    // TODO: Implement category based items, could be tags for now.
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Category category;
 
     @OneToMany
     private List<Comments> comments;
@@ -32,7 +34,7 @@ public class Items {
     public Items() {
     }
 
-    public Items(String title, String imagePath, String imageFileName, String description, User owner) {
+    public Items(String title, String imagePath, String imageFileName, String description, User owner, Category category) {
         this.title = title;
         this.imagePath = imagePath;
         this.imageFileName = imageFileName;
@@ -40,6 +42,7 @@ public class Items {
         this.available = true;
         this.createdAt = new Date();
         this.owner = owner;
+        this.category = category;
     }
 
     public Long getId() {
@@ -116,4 +119,11 @@ public class Items {
         this.owner = owner;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 }

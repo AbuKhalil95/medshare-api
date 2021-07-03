@@ -22,8 +22,8 @@ public class User  {
     private String middlename;
     private String lastname;
 
-    @Column(length =2048)
-    private String profileImage;
+    private String imagePath;
+    private String imageFileName;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -38,7 +38,7 @@ public class User  {
     public User() {
     }
 
-    public User(String username, String password, String email, String firstname, String middlename, String lastname, String profileImage, Date createdAt) {
+    public User(String username, String password, String email, String firstname, String middlename, String lastname, String imagePath, String imageFileName, Date createdAt) {
 
         this.username = username;
         this.password = password;
@@ -46,7 +46,8 @@ public class User  {
         this.firstname = firstname;
         this.middlename = middlename;
         this.lastname = lastname;
-        this.profileImage = profileImage;
+        this.imagePath = imagePath;
+        this.imageFileName = imageFileName;
         this.createdAt = createdAt;
     }
 
@@ -110,12 +111,20 @@ public class User  {
         return firstname + ' ' + middlename + ' ' + lastname;
     }
 
-    public String getProfileImage() {
-        return profileImage;
+    public String getImagePath() {
+        return imagePath;
     }
 
-    public void setProfileImage(String profileImage) {
-        this.profileImage = profileImage;
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public String getImageFileName() {
+        return imageFileName;
+    }
+
+    public void setImageFileName(String imageFileName) {
+        this.imageFileName = imageFileName;
     }
 
     public Date getCreatedAt() {
@@ -147,12 +156,13 @@ public class User  {
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
                 ", firstname='" + firstname + '\'' +
                 ", middlename='" + middlename + '\'' +
                 ", lastname='" + lastname + '\'' +
-                ", profileImage='" + profileImage + '\'' +
+                ", imagePath='" + imagePath + '\'' +
+                ", imageFileName='" + imageFileName + '\'' +
                 ", createdAt=" + createdAt +
                 ", userInfo=" + userInfo +
                 ", ownedItems=" + ownedItems +

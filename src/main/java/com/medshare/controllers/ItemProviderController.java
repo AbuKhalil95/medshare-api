@@ -1,6 +1,8 @@
 package com.medshare.controllers;
 
+import com.medshare.models.Category;
 import com.medshare.models.Items;
+import com.medshare.repositories.CategoryRepository;
 import com.medshare.repositories.ItemsRepository;
 import com.medshare.repositories.UserRepository;
 import com.medshare.services.ImageService;
@@ -26,12 +28,15 @@ public class ItemProviderController<T> {
     UserRepository userRepository;
     @Autowired
     ItemsRepository itemsRepository;
-
+    @Autowired
+    CategoryRepository categoryRepository;
 
     // Gets the HTML form for adding items
     @GetMapping(value = "/add-item")
     public String displayAddItem(Model m, Principal p) {
         m.addAttribute("name", UserUtil.getFullName(p, userRepository));
+        m.addAttribute("categories", categoryRepository.findAll());
+        System.out.println("categories" + categoryRepository.findAll());
         return "item_add.html";
     }
 
@@ -41,15 +46,19 @@ public class ItemProviderController<T> {
     public RedirectView addItem(@RequestParam(value = "title") String title,
                                 @RequestParam(value = "image") MultipartFile image,
                                 @RequestParam(value = "description") String description,
+                                @RequestParam(value = "category") String categoryName,
                                 Principal p, Model m) {
 
         m.addAttribute("name", UserUtil.getFullName(p, userRepository));
+        Category category = categoryRepository.findByName(categoryName);
+
         System.out.println("image upload name and size: " + image.getName() + " " + image.getSize());
+        System.out.println("category chosen" + category.toString());
         System.out.println("existing service: " + imageService);
         ArrayList imageInfo = imageService.saveImage(image);
         System.out.println("IMAGE INFO" + imageInfo);
 
-        Items item = new Items(title, (String) imageInfo.get(0), (String) imageInfo.get(1), description, userRepository.findByUsername(p.getName()));
+        Items item = new Items(title, (String) imageInfo.get(0), (String) imageInfo.get(1), description, userRepository.findByUsername(p.getName()), category);
         System.out.println(userRepository.findByUsername(p.getName()));
         System.out.println(item);
 

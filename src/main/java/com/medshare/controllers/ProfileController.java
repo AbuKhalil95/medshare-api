@@ -4,6 +4,7 @@ import com.medshare.models.User;
 import com.medshare.models.UserInfo;
 import com.medshare.repositories.UserInfoRepository;
 import com.medshare.repositories.UserRepository;
+import com.medshare.services.ImageService;
 import com.medshare.services.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,10 +16,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
+import java.util.ArrayList;
 
 @Controller
 public class ProfileController {
 
+    @Autowired
+    ImageService imageService;
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -28,7 +32,6 @@ public class ProfileController {
     @GetMapping("/profile")
     public String profile(Principal p, Model m) {
 
-        m.addAttribute("name", UserUtil.getFullName(p, userRepository));
         m.addAttribute("user", userRepository.findByUsername(p.getName()));
         return "user_profile.html";
     }
@@ -36,18 +39,15 @@ public class ProfileController {
     // Updates the image to the profile image
     @PutMapping("/profile_image")
     public RedirectView editProfileImage(
-            @RequestParam(value = "profilePictures")MultipartFile updateImage, Principal p) {
+            @RequestParam(value = "profilePictures")MultipartFile updatedImage, Principal p) {
 
         String loggedInUserName = p.getName();
         User user = userRepository.findByUsername(loggedInUserName);
+        ArrayList imageInfo = imageService.saveImage(updatedImage);
 
-        String profileImage = "default.jpg";
-//        String fileName=uploadFileService.uploadFile(updateImage);
-//        if (fileName!=null) {
-//            profileImage = fileName;
-//        }
+        user.setImagePath((String) imageInfo.get(0));
+        user.setImageFileName((String) imageInfo.get(1));
 
-        user.setProfileImage(profileImage);
         userRepository.save(user);
         return new RedirectView("/profile");
     }
