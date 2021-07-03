@@ -24,7 +24,6 @@
 ### Gradle template
 .gradle
 build/
-application.properties
 # Ignore Gradle GUI config
 gradle-app.setting
 
