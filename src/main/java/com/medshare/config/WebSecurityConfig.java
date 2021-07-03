@@ -39,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/","/signup","/login").permitAll()
-                .antMatchers("/webjars/**","/images/**","/css/**","/js/**","./allImages/**").permitAll()
+                .antMatchers("/webjars/**","/images/**","/css/**.css","/js/**.js","./allImages/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -51,6 +51,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .logout()
                 .logoutUrl("/perform_logout")
                 .deleteCookies("JSESSIONID");
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web
+                .ignoring()
+                .antMatchers("/resources/**"); // #3
     }
 
 //    @Bean
