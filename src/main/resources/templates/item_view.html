@@ -4,19 +4,20 @@
 <body>
 <div th:replace="fragments/common :: header"/>
 <main>
-	Here is main item_view.html
-	<tr th:each="item, iStat : ${allItems}"
-		th:style="${iStat.odd}? 'font-weight: bold;'"
-		th:alt-title="${iStat.even}? 'even' : 'odd'">
-		
-		<td th:text="${item.getTitle()}" />
-		<td th:text="'Is available?' + ${item.getAvailable()}" />
-
-		<td th:each="image, isStat : ${item.getImagePath()}">
-			<img th:src="${image}" th:alt="${item.getTitle() + isStat.index}">
-		</td>
-		<a th:href="'/items/' + ${item.getId()}">Details</a>
-	</tr>
+	Here is all items view
+	<div class="card-deck">
+		<div th:each="item, iStat : ${allItems}"
+			 th:style="${iStat.odd}? 'font-weight: bold; width: 18rem'"
+			 th:alt-title="${iStat.even}? 'even' : 'odd'" class="card">
+			
+			<img th:src="${item.getImagePath()}" th:alt="${item.getTitle()}" style="max-width: 18rem">
+			<div class="card-body">
+				<h5 th:text="${item.getTitle()}" />
+				<td th:text="'Is available?' + ${item.getAvailable()}" />
+				<a th:href="'/items/' + ${item.getId()}">Details</a>
+			</div>
+		</div>
+	</div>
 </main>
 <div th:replace="fragments/common :: footer"/>
 </body>

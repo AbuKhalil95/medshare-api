@@ -44,7 +44,7 @@ class MainController {
     public String login() {
         System.out.println("inside login");
         if (!UserUtil.isLoggedIn()) return "user_login.html";
-        return "redirect:/";
+        return "redirect:/profile";
     }
 
     // Gets the signup page

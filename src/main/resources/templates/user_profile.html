@@ -7,7 +7,7 @@
 	<h1>Profile</h1>
 	<img th:src="${user.getImagePath()}" th:alt="${user.getImageFileName}">
 	
-	<form action="/profile_image?_method=PUT"  method="POST" enctype="multipart/form-data">
+	<form th:object="${commandObject}" th:action="@{/profile_image}" th:method="PUT" enctype="multipart/form-data">
 		<div class="form-group">
 			<label for="profilePicture">Profile Picture</label>
 			<input type="file" class="form-control" id="profilePicture" name="profilePicture" onchange="validateSize(this)">
@@ -17,11 +17,11 @@
 			<span>Change Photo</span>
 		</button>
 	</form>
-	<h2>Joined: <span th:text="${user.getOwnedItems()}"/></h2>
-	<h2>Full Name: <span th:text="${user.getFirstname()} + ${user.getMiddlename()} + ${user.getLastname()}"/></h2>
+	<h2>Joined: <span th:text="${user.getCreatedAt()}"/></h2>
+	<h2>Full Name: <span th:text="${user.getFirstname()} + ' ' + ${user.getMiddlename()} + ' ' + ${user.getLastname()}"/></h2>
 	<h3>Email: <span th:text="${user.getEmail()}"/></h3>
 	
-	<h4>Owned Items:</h4>
+	<h4>Owned Items</h4>
 	<tr th:each="item, iStat : ${user.getOwnedItems()}"
 		th:style="${iStat.odd}? 'font-weight: bold;'"
 		th:alt-title="${iStat.even}? 'even' : 'odd'">
