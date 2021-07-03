@@ -50,15 +50,16 @@ public class ItemProviderController<T> {
                                 Principal p, Model m) {
 
         m.addAttribute("name", UserUtil.getFullName(p, userRepository));
+        System.out.println("category" + categoryName);
         Category category = categoryRepository.findByName(categoryName);
 
         System.out.println("image upload name and size: " + image.getName() + " " + image.getSize());
-        System.out.println("category chosen" + category.toString());
+//        System.out.println("category chosen" + category.toString());
         System.out.println("existing service: " + imageService);
         ArrayList imageInfo = imageService.saveImage(image);
         System.out.println("IMAGE INFO" + imageInfo);
 
-        Items item = new Items(title, (String) imageInfo.get(0), (String) imageInfo.get(1), description, userRepository.findByUsername(p.getName()), category);
+        Items item = new Items(title, (String) imageInfo.get(0), (String) imageInfo.get(1), description, userRepository.findByUsername(p.getName()), null);
         System.out.println(userRepository.findByUsername(p.getName()));
         System.out.println(item);
 
